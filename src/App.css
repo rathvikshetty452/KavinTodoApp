@@ -1,0 +1,330 @@
+/* App.css */
+/* .header {
+  background-color: #0078D4;
+  color: white;
+  padding: 12px 16px;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  font-size: 24px;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+.customCircularButton {
+   height: 50px !important;
+   width: 50px !important;
+   position: absolute;
+   right: 30px;
+   bottom: 70px;
+   z-index: 1000;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 50% !important;
+   color: white !important;
+   background-color: #0078D4;
+   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+ }
+
+ .customCircularButton .ms-Icon {
+   font-size: 24px !important;
+ }
+
+ .customCircularButton:hover {
+   background-color: var(--lightdarkBG);
+   color: white;
+ }
+
+ .customCircularButton {
+   i[data-icon-name=ChevronDown] {
+     display: none;
+   }
+ }
+ .centerpage{
+    width: 50%;
+    margin: 0 auto;
+    align-items: center;
+    position: relative;
+    min-height: 100vh;
+ }
+ .customCircularButton {
+     .ms-Button--default {
+       background: unset !important;
+       color: white !important;
+       border: unset !important;
+       height: 35px;
+       
+     }
+   } */
+    /* todo.css */
+.centerpage {
+  width: 400px;
+  margin: 30px auto;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  padding-bottom: 80px;
+}
+
+.header {
+  background-color: #0078d4;
+  color: white;
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 0;
+  margin: 0;
+}
+
+/* .search-container {
+  width: 90%;
+  margin-top: 15px;
+} */
+
+/* Section styling */
+.todo-section {
+  width: 90%;
+  margin-top: 15px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f2f1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section-content {
+  margin-top: 8px;
+}
+
+/* Each task card */
+.todo-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.todo-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Left side — avatar + icon */
+.todo-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  position: relative;
+}
+
+.task-avatar {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #0078d4; /* blue border */
+  color: #0078d4; /* text color */
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; /* no fill */
+  margin-bottom: 4px;
+}
+.task-avatar:hover {
+  background-color: #0078d4;
+  color: #fff;
+  cursor: default;
+}
+
+
+.task-icon {
+  font-size: 18px;
+  color: #0078d4;
+}
+
+/* Center section */
+.todo-center {
+  flex: 1;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0078d4;
+}
+
+.task-desc {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #333;
+}
+
+.task-date {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Right side — status + hover buttons */
+.todo-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+}
+
+.status-label {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-label.Pending {
+  background-color: #fff4ce;
+  color: #c19c00;
+}
+
+.status-label.inprogress {
+  background-color: #deecf9;
+  color: #0078d4;
+}
+
+.status-label.Completed {
+  background-color: #dff6dd;
+  color: #107c10;
+}
+
+/* Hover actions */
+.task-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.todo-card:hover .task-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+.delete-btn .ms-Icon {
+  color: red;
+  font-size: 16px;
+}
+
+.edit-btn .ms-Icon {
+  color: #0078d4;
+  font-size: 16px;
+}
+
+
+/* Floating Add Button */
+.customCircularButton {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #0078d4;
+  color: white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+}
+ .customCircularButton {
+     .ms-Button--default {
+       background: unset !important;
+       color: white !important;
+       border: unset !important;
+     }
+   }
+   .customCircularButton .ms-Icon {
+   font-size: 24px !important;
+ }
+
+ .customCircularButton:hover {
+   background-color: #106ebe;
+   color: white;
+ }
+
+/* //animation */
+.fase_in_out_loading_dev_pulsing_animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fase_in_out_loading_dev_pulsing_animation div {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor; /* uses the current text color */
+  animation: fadeinout 1.2s infinite ease-in-out;
+}
+
+
+.fase_in_out_loading_dev_pulsing_animation div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.fase_in_out_loading_dev_pulsing_animation div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeinout {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* .ms-Panel-closeButton{
+  background-color:#0078d4 
+} */
+  .ms-Panel-navigation {
+    background-color:#0078d4 ;
+    padding: 6px 0;
+    height: 30px;
+  }
+   .ms-Panel-commands {
+     background-color:#0078d4 ;
+       margin: 0px;
+    padding: 0px;
+   }
+.ms-Button-flexContainer .ms-Button-icon {
+    color: #fff !important;
+    background-color: none;
+  }
+ 
