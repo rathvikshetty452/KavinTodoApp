@@ -1,73 +1,13 @@
 /* App.css */
-/* .header {
-  background-color: #0078D4;
-  color: white;
-  padding: 12px 16px;
-  text-align: center;
-  margin: 0;
-  width: 100%;
-  font-size: 24px;
-  font-weight: 600;
-  box-sizing: border-box;
-}
-.customCircularButton {
-   height: 50px !important;
-   width: 50px !important;
-   position: absolute;
-   right: 30px;
-   bottom: 70px;
-   z-index: 1000;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border-radius: 50% !important;
-   color: white !important;
-   background-color: #0078D4;
-   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
- }
-
- .customCircularButton .ms-Icon {
-   font-size: 24px !important;
- }
-
- .customCircularButton:hover {
-   background-color: var(--lightdarkBG);
-   color: white;
- }
-
- .customCircularButton {
-   i[data-icon-name=ChevronDown] {
-     display: none;
-   }
- }
- .centerpage{
-    width: 50%;
-    margin: 0 auto;
-    align-items: center;
-    position: relative;
-    min-height: 100vh;
- }
- .customCircularButton {
-     .ms-Button--default {
-       background: unset !important;
-       color: white !important;
-       border: unset !important;
-       height: 35px;
-       
-     }
-   } */
-    /* todo.css */
 .centerpage {
-  width: 400px;
+  width: 500px;
   margin: 30px auto;
   position: relative;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
   overflow: hidden;
   padding-bottom: 80px;
 }
@@ -83,11 +23,12 @@
   margin: 0;
 }
 
-/* .search-container {
-  width: 90%;
-  margin-top: 15px;
-} */
-
+.textfieldalign{
+  display: flex;
+  flex-direction: column;
+  gap:16px;
+  padding-top: 16px;
+}
 /* Section styling */
 .todo-section {
   width: 90%;
@@ -122,6 +63,7 @@
   margin: 10px 0;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .todo-card:hover {
@@ -141,15 +83,15 @@
 .task-avatar {
   width: 40px;
   height: 40px;
-  border: 2px solid #0078d4; /* blue border */
-  color: #0078d4; /* text color */
+  border: 2px solid #0078d4; 
+  color: #0078d4; 
   font-weight: 600;
   font-size: 18px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent; /* no fill */
+  background-color: transparent; 
   margin-bottom: 4px;
 }
 .task-avatar:hover {
@@ -171,15 +113,19 @@
 
 .task-title {
   margin: 0;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   color: #0078d4;
 }
-
+.todoaligin {
+  display: flex;
+  justify-content: space-between;
+}
 .task-desc {
   margin: 4px 0;
-  font-size: 13px;
+  font-size: 15px;
   color: #333;
+ font-family: 'Segoe UI', sans-serif;
 }
 
 .task-date {
@@ -187,7 +133,7 @@
   color: #777;
 }
 
-/* Right side — status + hover buttons */
+
 .todo-right {
   display: flex;
   flex-direction: column;
@@ -195,27 +141,37 @@
   position: relative;
 }
 
+
 .status-label {
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.status-label.Pending {
-  background-color: #fff4ce;
-  color: #c19c00;
+/* Status dot (the small circle) */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.status-label.inprogress {
-  background-color: #deecf9;
-  color: #0078d4;
+
+
+/* Specific colors for each status */
+.status-dot.pending {
+  background-color: #a6a6a6; 
 }
 
-.status-label.Completed {
-  background-color: #dff6dd;
-  color: #107c10;
+.status-dot.inprogress {
+  background-color: #f4d44d; 
+}
+
+.status-dot.completed {
+  background-color: #107c10; 
 }
 
 /* Hover actions */
@@ -233,12 +189,12 @@
   visibility: visible;
 }
 
-.delete-btn .ms-Icon {
+.delete-btn {
   color: red;
   font-size: 16px;
 }
 
-.edit-btn .ms-Icon {
+.edit-btn {
   color: #0078d4;
   font-size: 16px;
 }
@@ -288,7 +244,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: currentColor; /* uses the current text color */
+  background-color: currentColor; 
   animation: fadeinout 1.2s infinite ease-in-out;
 }
 
@@ -310,9 +266,12 @@
     transform: scale(1);
   }
 }
-/* .ms-Panel-closeButton{
+.ms-Panel-closeButton:hover{
   background-color:#0078d4 
-} */
+}
+.ms-Panel-closeButton .ms-Button-flexContainer {
+  color:white
+}
   .ms-Panel-navigation {
     background-color:#0078d4 ;
     padding: 6px 0;
@@ -323,8 +282,8 @@
        margin: 0px;
     padding: 0px;
    }
-.ms-Button-flexContainer .ms-Button-icon {
-    color: #fff !important;
-    background-color: none;
-  }
+.searchmargin{
+margin-top:15px;
+width: 90%;
+}
  

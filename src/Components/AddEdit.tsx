@@ -1,39 +1,38 @@
-import { DefaultButton, Dropdown, Panel, PrimaryButton, TextField, type IDropdownOption } from '@fluentui/react'
+import { DefaultButton, Dropdown, Panel, PrimaryButton, PanelType, TextField, type IDropdownOption, MessageBar, MessageBarType } from '@fluentui/react'
 import React from 'react'
 import { useTodoStore } from '../store/useTodoStore';
+
 interface AddEditprops {
   isOpen: boolean;
   mode: "add" | "edit";
   taskData?: any;
   onDismiss: () => void;
-  // onSave?: any;
-  // setAllitems: any;
-  // allitems: any;
 }
 const statusOptions: IDropdownOption[] = [
-  { key: "inprogress", text: "inprogress" },
+  { key: "inprogress", text: "In Progress" },
   { key: "Pending", text: "Pending" },
   { key: "Completed", text: "Completed" },
 ];
-
+type MessageType = "success" | "error" | null;
 const AddEdit: React.FC<AddEditprops> = ({
-  isOpen, 
-  mode, 
-  taskData, 
-  onDismiss, 
-  //  setAllitems, 
-  //  allitems
+  isOpen,
+  mode,
+  taskData,
+  onDismiss,
 }) => {
   const [formData, setFormData] = React.useState<any>({
     taskName: "",
     taskDesc: "",
-    status: "pending",
+    status: "inprogress",
   });
   const [loading, setLoading] = React.useState(false);
-  
+  const [message, setMessage] = React.useState<{
+    type: MessageType;
+    text: string;
+  }>({ type: null, text: "" });
   const addTodo = useTodoStore((c) => c.addTodo)
-    const updateTodo = useTodoStore((c) => c.updateTodo)
-  
+  const updateTodo = useTodoStore((c) => c.updateTodo)
+  const todo = useTodoStore((c) => c.todos)
   React.useEffect(() => {
     if (mode === "edit" && taskData) {
       setFormData(taskData);
@@ -41,81 +40,106 @@ const AddEdit: React.FC<AddEditprops> = ({
       setFormData({
         taskName: "",
         taskDesc: "",
-        status: "Pending", // default
+        status: "inprogress", // default
       });
     }
   }, [mode, taskData]);
   const handleSave = async () => {
-    setLoading(true);
-    if (!formData.taskName?.trim()) return; // optional basic validation
-    await new Promise((res) => setTimeout(res, 1000));
-    if (mode === "add") {
-      // const newTask = {
-      //   id: Date.now(),
-      //   taskName: formData.taskName,
-      //   taskDesc: formData.taskDesc,
-      //   status: "pending",
-      //   date: new Date().toISOString(),
-      // };
-      // setAllitems([...allitems, newTask]);
-      addTodo(formData.taskName,formData.taskDesc,"Pending")
-    } else if (mode === "edit") {
-      // const updatedList = allitems.map((item: any) =>
-      //   item.id === taskData.id ? { ...item, ...formData } : item
-      // );
-      // setAllitems(updatedList);
-      updateTodo(taskData.id,formData.taskName,formData.taskDesc,formData.status)
+    if (!formData.taskName?.trim()) {
+      setMessage({ type: "error", text: "Please enter the task title" });
+      autoClearMessage();
+      return;
     }
-    setLoading(false);
-    onDismiss();
+
+    if (!formData.taskDesc?.trim()) {
+      setMessage({ type: "error", text: "Please enter the task description" });
+      autoClearMessage();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await new Promise((res) => setTimeout(res, 800));
+
+      if (mode === "add") {
+        await addTodo(formData.taskName.trim(), formData.taskDesc, "inprogress");
+        setMessage({ type: "success", text: "Task added successfully!" });
+      } else if (mode === "edit") {
+        await updateTodo(taskData.id, formData.taskName, formData.taskDesc, formData.status);
+        setMessage({ type: "success", text: "Task updated successfully!" });
+      }
+      setTimeout(() => {
+        setMessage({ type: null, text: "" });
+        onDismiss();
+      }, 1000);
+    } catch (err) {
+      setMessage({ type: "error", text: "Something went wrong. Please try again." });
+      autoClearMessage();
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const autoClearMessage = () => {
+    setTimeout(() => setMessage({ type: null, text: "" }), 1500);
+  };
+
   return (
     <div>
       <Panel
         headerText={mode === "edit" ? "Edit Task" : "Add Task"}
+        type={PanelType.custom}
+        customWidth="400px"
         isOpen={isOpen}
         onDismiss={onDismiss}
         closeButtonAriaLabel="Close"
         styles={{
-          //      header: {
-          //   backgroundColor: "#0078d4", // your color here
-          //   color: "white",
-          //   padding: "12px 24px",
-          // }, 
           headerText: {
             color: "white",
-            //   fontWeight: "bold",
             fontSize: 18,
           },
         }}
       >
-        <TextField
-          label="Enter the title"
-          value={formData?.taskName}
-          onChange={(_event, newValue) => {
-            setFormData((prev: any) => ({
-              ...prev,
-              taskName: newValue
-            })
-            )
-          }
-          }
-        />
-        <TextField
-          label="Enter the description"
-          value={formData?.taskDesc}
-          onChange={(_event, newValue) => {
-            setFormData((prev: any) => ({
-              ...prev,
-              taskDesc: newValue
-            })
-            )
-          }
-          }
-          multiline
-        />
-        {mode == "edit" &&
-          <div style={{ marginTop: "5px" }}>
+        {message.type && (
+          <MessageBar
+            messageBarType={
+              message.type === "success"
+                ? MessageBarType.success
+                : MessageBarType.error
+            }
+            isMultiline={false}
+          >
+            {message.text}
+          </MessageBar>
+        )}
+
+        <div className='textfieldalign'>
+          <TextField
+            placeholder="Enter the task title"
+            value={formData?.taskName}
+            onChange={(_event, newValue) => {
+              setFormData((prev: any) => ({
+                ...prev,
+                taskName: newValue
+              })
+              )
+            }
+            }
+          />
+          <TextField
+            placeholder="Enter the task description"
+            value={formData?.taskDesc}
+            onChange={(_event, newValue) => {
+              setFormData((prev: any) => ({
+                ...prev,
+                taskDesc: newValue
+              })
+              )
+            }
+            }
+            multiline
+          />
+          {mode == "edit" &&
             <Dropdown
               placeholder='select Status'
               options={statusOptions}
@@ -129,9 +153,9 @@ const AddEdit: React.FC<AddEditprops> = ({
               }
               }
             />
-          </div>
-        }
-        <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 20, gap: 8 }}>
+          }
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20, gap: 8 }}>
           <DefaultButton text="Cancel" onClick={onDismiss} />
           {/* text={mode === "edit" ? "Update" : "Add"}  */}
           <PrimaryButton onClick={handleSave}>
@@ -148,6 +172,7 @@ const AddEdit: React.FC<AddEditprops> = ({
               </div>
             ) : null}    </PrimaryButton>
         </div>
+
       </Panel>
     </div>
   )

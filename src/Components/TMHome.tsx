@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { DefaultButton, SearchBox } from "@fluentui/react";
+import { DefaultButton, initializeIcons, SearchBox } from "@fluentui/react";
 import { initialitem, searchBoxStyles } from './Commonfunction';
 import "../App.css"
 import ToDoSection from './ToDoSection';
@@ -8,7 +8,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import AddEdit from './AddEdit';
 import { useTodoStore } from '../store/useTodoStore';
 export const TMHome: React.FunctionComponent = () => {
-
+    initializeIcons();
     const todos = useTodoStore(c => c.todos)
     const removeTodo = useTodoStore((c) => c.removeTodo)
     const [allitems, setAllitems] = React.useState<any>([])
@@ -47,19 +47,21 @@ export const TMHome: React.FunctionComponent = () => {
         toggleOpen();
     };
     const handleDelete = (id: any) => {
-        // setAllitems((prev: any) => prev.filter((item: any) => item.id !== id));
         removeTodo(id)
     };
 
     React.useEffect(() => {
         setAllitems(todos)
     }, [todos])
-
+    const addTodoTask = () => {
+        setMode("add");
+        toggleOpen();
+    }
     return (
         <>
-            <div className='centerpage'>
+            <div className='centerpage todo-app'>
                 <header className="header">TODO APP</header>
-                <div>
+                <div className='searchmargin'>
                     <SearchBox
                         placeholder='Search To-Do'
                         value={searchitem}
@@ -69,9 +71,7 @@ export const TMHome: React.FunctionComponent = () => {
                 </div>
                 {sections.map((section: any) => (
                     <ToDoSection
-                        key={section.statusKey}
                         title={section.title}
-                        statusKey={section.statusKey}
                         tasks={filterTasksByStatus(section.statusKey)}
                         isExpanded={expandedSections[section.statusKey]}
                         onToggle={() => toggleSection(section.statusKey)}
@@ -83,7 +83,7 @@ export const TMHome: React.FunctionComponent = () => {
                     <DefaultButton
                         id="addicon"
                         iconProps={{ iconName: "Add" }}
-                        onClick={() => toggleOpen()}
+                        onClick={() => addTodoTask()}
                         //  menuProps={menuProps}
                         styles={{
                             root: {
@@ -102,8 +102,6 @@ export const TMHome: React.FunctionComponent = () => {
                         mode={mode}
                         isOpen={isOpen}
                         onDismiss={toggleOpen}
-                        // setAllitems={setAllitems}
-                        // allitems={allitems}
                         taskData={selectedTask}
                     />
                 }
